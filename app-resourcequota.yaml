@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: resourcequota
+  namespace: my-rq
+spec:
+  hard:
+    pods: "2"
+    count/deployment: "2"
+    services: "2"
+    count/configMaps: "2"

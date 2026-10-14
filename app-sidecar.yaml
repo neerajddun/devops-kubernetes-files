@@ -1,0 +1,15 @@
+# ---sidecar container
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-name
+  namespace: oct
+spec:
+  containers:
+    - name: pod-name
+      image: nginx:latest
+      ports:
+        - containerPort: 80
+    - name: pod-sidecar
+      image: busy-box:1.36
+      command: ["sh", "-c", "while true; do echo Hello !; sleep 5; done"]

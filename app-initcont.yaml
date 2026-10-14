@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+  namespace: oct
+spec:
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      initContainers:
+        - name: init-setup
+          image: busybox
+          command: ["sh", "-c", "echo my message .... && sleep 5"]
+      containers:
+        - name: myapp
+          image: nginx:latest
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 80
