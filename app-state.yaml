@@ -1,0 +1,49 @@
+# statefullset
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: appstate-svc
+  namespace: oct
+spec:
+  clusterIP: None
+  selector:
+    app: app-test
+  ports:
+    - port: 80
+      name: web
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mystatefulset
+  namespace: oct
+spec:
+  selector:
+    matchLabels:
+      app: app-test
+  serviceName: myservicename
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: app-test
+    spec:
+      containers:
+        - name: app-test
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+              name: web
+          volumeMounts:
+            - name: mymount
+              mountPath: /usr/share/nginx/html
+  volumeClaimTemplates:
+    - metadata:
+        name: mymount
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 1Gi
