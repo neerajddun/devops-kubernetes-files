@@ -6,3 +6,16 @@ kubectl drain node1 --ignore-daemonsets --delete-emptydir-data
 
 kubectl uncordon node1
 
+$ to autoscale - kubectl autocscale deployment/statefullset --cpu=50%
+
+--min=1 --max=10 
+
+# to autoscale in eks we used fargate . 
+
+# we also used kubeadm 
+
+1 kubeadm init 
+
+2. kubeadm join 
+
+to create a k8s cluster 

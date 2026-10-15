@@ -1,0 +1,19 @@
+# taint the node show toleration in pod
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ex-pod
+  labels:
+    security: s1
+spec:
+  containers:
+    - name: ex-pod
+      image: nginx:latest
+      ports:
+        - containerPort: 80
+  tolerations:
+    - key: "special"
+      operator: "Equal"
+      value: "true"
+      effect: "NoSchedule"
