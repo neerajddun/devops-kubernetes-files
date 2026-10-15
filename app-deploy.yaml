@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deploy
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: app-deploy
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  template:
+    metadata:
+      labels:
+        app: app-deploy
+    spec:
+      containers:
+        - name: app-deploy
+          image: nginx:latest
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+            requests:
+              memory: "100Mi"
+              cpu: "150m"
+          ports:
+            - containerPort: 80
+          livenessProbe:
+            httpGet:
+              port: 80
+              path: /
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              port: 80
+              path: /
+            initialDelaySeconds: 5
+            periodSeconds: 5
