@@ -1,0 +1,8 @@
+# To cordon the node and drain the node and uncordon
+
+kubectl cordon node1
+
+kubectl drain node1 --ignore-daemonsets --delete-emptydir-data
+
+kubectl uncordon node1
+
